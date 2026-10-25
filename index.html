@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Nova Studio</title>
+    <style>
+      :root {
+        --bg: #07111f;
+        --bg-soft: #0d1b2a;
+        --panel: rgba(15, 23, 42, 0.8);
+        --panel-strong: #111827;
+        --text: #e5eefb;
+        --muted: #9fb4d1;
+        --primary: #62d0ff;
+        --accent: #7c6cff;
+        --success: #4ade80;
+        --shadow: rgba(98, 208, 255, 0.25);
+      }
+
+      * { box-sizing: border-box; }
+
+      html {
+        scroll-behavior: smooth;
+      }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        color: var(--text);
+        background:
+          radial-gradient(circle at top left, rgba(124, 108, 255, 0.3), transparent 30%),
+          radial-gradient(circle at bottom right, rgba(98, 208, 255, 0.25), transparent 35%),
+          var(--bg);
+      }
+
+      a {
+        color: inherit;
+        text-decoration: none;
+      }
+
+      .container {
+        width: min(1120px, calc(100% - 32px));
+        margin: 0 auto;
+      }
+
+      header {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(12px);
+        background: rgba(7, 17, 31, 0.75);
+        border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        z-index: 10;
+      }
+
+      .nav {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 74px;
+      }
+
+      .brand {
+        display: inline-flex;
+        align-items: center;
+        gap: 12px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+
+      .brand-mark {
+        width: 34px;
+        height: 34px;
+        border-radius: 10px;
+        background: linear-gradient(135deg, var(--primary), var(--accent));
+        display: grid;
+        place-items: center;
+        box-shadow: 0 0 24px var(--shadow);
+        font-size: 1.1rem;
+      }
+
+      .nav-links {
+        display: flex;
+        gap: 28px;
+        color: var(--muted);
+        font-size: 0.96rem;
+      }
+
+      .nav-actions {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .btn {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border-radius: 12px;
+        border: 1px solid transparent;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.2s ease;
+      }
+
+      .btn:hover {
+        transform: translateY(-1px);
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), #90f1ff);
+        color: #031522;
+        box-shadow: 0 12px 28px rgba(98, 208, 255, 0.4);
+      }
+
+      .btn-secondary {
+        background: rgba(255, 255, 255, 0.03);
+        border-color: rgba(255, 255, 255, 0.08);
+        color: var(--text);
+      }
+
+      .hero {
+        padding: 72px 0 54px;
+      }
+
+      .hero-wrap {
+        display: grid;
+        grid-template-columns: 1.1fr 0.9fr;
+        align-items: center;
+        gap: 42px;
+      }
+
+      .eyebrow {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        padding: 8px 12px;
+        border-radius: 999px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        background: rgba(124, 108, 255, 0.12);
+        color: #d9d2ff;
+        border: 1px solid rgba(124, 108, 255, 0.25);
+      }
+
+      .eyebrow::before {
+        content: "";
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: var(--success);
+        box-shadow: 0 0 12px var(--success);
+      }
+
+      h1 {
+        font-size: clamp(2.7rem, 4vw, 5rem);
+        line-height: 1.05;
+        margin: 20px 0 18px;
+        letter-spacing: -0.06em;
+      }
+
+      .lead {
+        max-width: 620px;
+        color: var(--muted);
+        font-size: 1.1rem;
+        line-height: 1.7;
+        margin-bottom: 28px;
+      }
+
+      .cta-row {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 16px;
+        margin-bottom: 26px;
+      }
+
+      .trust {
+        display: flex;
+        gap: 28px;
+        flex-wrap: wrap;
+        color: var(--muted);
+        font-size: 0.9rem;
+      }
+
+      .trust strong {
+        color: var(--text);
+        margin-right: 6px;
+      }
+
+      .dashboard {
+        position: relative;
+        padding: 20px;
+        border-radius: 28px;
+        background: linear-gradient(180deg, rgba(15, 23, 42, 0.9), rgba(9, 16, 28, 0.9));
+        border: 1px solid rgba(255, 255, 255, 0.07);
+        box-shadow: 0 32px 60px rgba(0, 0, 0, 0.45);
+      }
+
+      .dashboard::before {
+        content: "";
+        position: absolute;
+        inset: -18px -10px auto auto;
+        width: 120px;
+        height: 120px;
+        background: radial-gradient(circle, rgba(98, 208, 255, 0.4), transparent 60%);
+        filter: blur(12px);
+      }
+
+      .window-bar {
+        display: flex;
+        gap: 8px;
+        padding: 8px 12px 14px;
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+      }
+
+      .dot.red { background: #ff5f57; }
+      .dot.yellow { background: #febc2e; }
+      .dot.green { background: #28c840; }
+
+      .chart {
+        background: rgba(5, 11, 20, 0.9);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 18px;
+        padding: 20px;
+      }
+
+      .chart-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 18px;
+      }
+
+      .chip {
+        background: rgba(74, 222, 128, 0.12);
+        color: #b9f7cc;
+        border: 1px solid rgba(74, 222, 128, 0.35);
+        border-radius: 999px;
+        padding: 6px 10px;
+        font-size: 0.75rem;
+        font-weight: 700;
+      }
+
+      .bars {
+        display: flex;
+        align-items: flex-end;
+        gap: 14px;
+        height: 180px;
+        padding-top: 10px;
+      }
+
+      .bar {
+        flex: 1;
+        background: linear-gradient(180deg, var(--primary), var(--accent));
+        border-radius: 12px 12px 0 0;
+        box-shadow: 0 8px 20px rgba(98, 208, 255, 0.35);
+      }
+
+      .bar:nth-child(1) { height: 38%; }
+      .bar:nth-child(2) { height: 56%; }
+      .bar:nth-child(3) { height: 82%; }
+      .bar:nth-child(4) { height: 64%; }
+      .bar:nth-child(5) { height: 95%; }
+      .bar:nth-child(6) { height: 72%; }
+
+      .mini-stats {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
+        margin-top: 18px;
+      }
+
+      .stat-card {
+        background: rgba(255, 255, 255, 0.02);
+        border: 1px solid rgba(255, 255, 255, 0.05);
+        border-radius: 16px;
+        padding: 16px;
+      }
+
+      .stat-label {
+        color: var(--muted);
+        font-size: 0.82rem;
+      }
+
+      .stat-value {
+        font-size: 1.7rem;
+        font-weight: 700;
+        margin-top: 12px;
+      }
+
+      .features {
+        padding: 34px 0 30px;
+      }
+
+      .section-head {
+        text-align: center;
+        margin: 0 auto 28px;
+        max-width: 720px;
+      }
+
+      .section-head h2 {
+        font-size: clamp(2rem, 3vw, 3rem);
+        letter-spacing: -0.05em;
+        margin: 0 0 10px;
+      }
+
+      .section-head p {
+        color: var(--muted);
+        line-height: 1.7;
+        margin: 0;
+      }
+
+      .feature-grid {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 22px;
+      }
+
+      .feature-card {
+        background: rgba(15, 23, 42, 0.72);
+        border: 1px solid rgba(255, 255, 255, 0.06);
+        border-radius: 22px;
+        padding: 24px;
+      }
+
+      .feature-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: grid;
+        place-items: center;
+        font-size: 1.4rem;
+        margin-bottom: 16px;
+        background: linear-gradient(135deg, rgba(98, 208, 255, 0.2), rgba(124, 108, 255, 0.18));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+      }
+
+      .feature-card h3 {
+        margin: 0 0 10px;
+        font-size: 1.3rem;
+      }
+
+      .feature-card p {
+        margin: 0;
+        color: var(--muted);
+        line-height: 1.7;
+      }
+
+      .cta-panel {
+        margin: 40px 0 70px;
+        padding: 34px 28px;
+        background: linear-gradient(135deg, rgba(98, 208, 255, 0.12), rgba(124, 108, 255, 0.14));
+        border: 1px solid rgba(255, 255, 255, 0.08);
+        border-radius: 24px;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 20px;
+        flex-wrap: wrap;
+      }
+
+      .cta-panel h3 {
+        font-size: clamp(1.8rem, 3vw, 2.5rem);
+        margin: 0 0 8px;
+        letter-spacing: -0.04em;
+      }
+
+      .cta-panel p {
+        margin: 0;
+        color: var(--muted);
+      }
+
+      footer {
+        border-top: 1px solid rgba(255, 255, 255, 0.07);
+        padding: 26px 0 48px;
+        color: var(--muted);
+      }
+
+      .footer-row {
+        display: flex;
+        justify-content: space-between;
+        gap: 16px;
+        flex-wrap: wrap;
+      }
+
+      @media (max-width: 860px) {
+        .nav-links {
+          display: none;
+        }
+
+        .hero-wrap,
+        .feature-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .hero {
+          padding-top: 48px;
+        }
+      }
+
+      @media (max-width: 560px) {
+        .nav-actions {
+          gap: 8px;
+        }
+
+        .btn {
+          min-height: 40px;
+          padding: 0 14px;
+          font-size: 0.9rem;
+        }
+
+        .cta-row {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .cta-row .btn {
+          width: 100%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header>
+      <div class="container nav">
+        <a href="#" class="brand" aria-label="Nova Studio home">
+          <span class="brand-mark">N</span>
+          <span>Nova Studio</span>
+        </a>
+
+        <nav class="nav-links" aria-label="Main navigation">
+          <a href="#features">Features</a>
+          <a href="#solutions">Solutions</a>
+          <a href="#pricing">Pricing</a>
+          <a href="#resources">Resources</a>
+        </nav>
+
+        <div class="nav-actions">
+          <a href="#" class="btn btn-secondary">Log in</a>
+          <a href="#" class="btn btn-primary">Start free</a>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero">
+        <div class="container hero-wrap">
+          <div>
+            <div class="eyebrow">Trusted by growth teams</div>
+            <h1>Turn bold ideas into measurable growth.</h1>
+            <p class="lead">
+              Nova Studio helps teams design smarter funnels, automate campaigns,
+              and unlock revenue with a single platform built for modern marketing.
+            </p>
+
+            <div class="cta-row">
+              <a href="#" class="btn btn-primary">Get started</a>
+              <a href="#features" class="btn btn-secondary">Explore features</a>
+            </div>
+
+            <div class="trust" aria-label="Customer metrics">
+              <div><strong>4.9/5</strong> Average rating</div>
+              <div><strong>12k+</strong> Customers</div>
+              <div><strong>3.4x</strong> ROI in 90 days</div>
+            </div>
+          </div>
+
+          <div class="dashboard" aria-label="Analytics dashboard preview">
+            <div class="window-bar">
+              <span class="dot red"></span>
+              <span class="dot yellow"></span>
+              <span class="dot green"></span>
+            </div>
+
+            <div class="chart">
+              <div class="chart-header">
+                <strong>Revenue overview</strong>
+                <span class="chip">+24.8%</span>
+              </div>
+
+              <div class="bars" aria-label="Bar chart for monthly revenue">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+              </div>
+            </div>
+
+            <div class="mini-stats">
+              <div class="stat-card">
+                <div class="stat-label">New leads</div>
+                <div class="stat-value">18.2k</div>
+              </div>
+              <div class="stat-card">
+                <div class="stat-label">Conversion</div>
+                <div class="stat-value">8.4%</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="features" id="features">
+        <div class="container">
+          <div class="section-head">
+            <h2>Everything your team needs to scale faster</h2>
+            <p>
+              Bring data, automation, and creative execution together in one streamlined workflow.
+            </p>
+          </div>
+
+          <div class="feature-grid">
+            <article class="feature-card">
+              <div class="feature-icon">⚡</div>
+              <h3>Campaign automation</h3>
+              <p>
+                Launch personalized journeys with rules, triggers, and AI-powered recommendations
+                that adapt in real time.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">📈</div>
+              <h3>Predictive insights</h3>
+              <p>
+                Spot trends early, identify your best channels, and make smarter decisions using live performance data.
+              </p>
+            </article>
+
+            <article class="feature-card">
+              <div class="feature-icon">🧩</div>
+              <h3>Unified workflows</h3>
+              <p>
+                Connect product, sales, and marketing into one source of truth so every move supports growth.
+              </p>
+            </article>
+          </div>
+        </div>
+      </section>
+
+      <section class="container">
+        <div class="cta-panel">
+          <div>
+            <h3>Build your next growth engine.</h3>
+            <p>See how Nova Studio can help your team ship faster and convert more customers.</p>
+          </div>
+          <a href="#" class="btn btn-primary">Book a demo</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div class="container footer-row">
+        <div>© 2026 Nova Studio</div>
+        <div>Privacy · Terms · Contact</div>
+      </div>
+    </footer>
+  </body>
+</html>
